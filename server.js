@@ -1,8 +1,14 @@
+// express
 const express = require("express");
 const app = express();
+// sequelize
 const sequelize = require("./config/db");
+// dontenv
 const dotenv = require("dotenv");
 dotenv.config();
+// User
+const User = require("./models/User");
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Home page");
