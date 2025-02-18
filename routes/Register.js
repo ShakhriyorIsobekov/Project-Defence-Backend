@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 // bcrypt
 const bcrypt = require("bcryptjs");
+// jwt
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-
+// dotenv
+const dotenv = require("dotenv");
+dotenv.config();
 // get
 router.get("/", (req, res) => {
   res.send("Register");
@@ -20,6 +24,17 @@ router.post("/", async (req, res) => {
       email,
       password: hashedPassword,
     });
+    const token = jwt.sign({ email: user.email, id: user.id }, SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      samSite: "Strict",
+      maxAge: 360000,
+    });
+
     res.status(200).json({ message: "User created successfully", user });
   } catch (err) {
     res
