@@ -37,9 +37,9 @@ router.post("/", async (req, res) => {
     });
     // store token in HTTP only cookie
     res.cookie("token", token, {
-      httOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
       maxAge: 3600000,
     });
     res.status(200).json({ message: "Login Successful!" });

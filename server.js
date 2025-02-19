@@ -14,6 +14,8 @@ dotenv.config();
 const cookieParser = require("cookie-parser");
 // User
 const User = require("./models/User");
+// middleware
+const authenticateToken = require("./middleware/authMiddleware");
 
 app.use(express.json());
 
@@ -25,12 +27,14 @@ app.get("/", (req, res) => {
 
 // routes
 const routeDashboard = require("./routes/dashboard");
-app.use("/dashboard", routeDashboard);
+app.use("/dashboard", authenticateToken, routeDashboard);
 const routeLogin = require("./routes/login");
 app.use("/login", routeLogin);
 const routeRegister = require("./routes/Register");
 app.use("/register", routeRegister);
 const routeLogout = require("./routes/logout");
 app.use("/logout", routeLogout);
+const routeAuthCheck = require("./routes/authCheck");
+app.use("/auth-check", routeAuthCheck);
 
 module.exports.handler = serverless(app);

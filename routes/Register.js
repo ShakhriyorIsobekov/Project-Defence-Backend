@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      samSite: "Strict",
+      SamSite: "None",
       maxAge: 360000,
     });
 
