@@ -43,4 +43,7 @@ app.use("/logout", routeLogout);
 const routeAuthCheck = require("./routes/authCheck");
 app.use("/auth-check", routeAuthCheck);
 
+// table from template => updates without deleting data
+sequelize.sync({ alter: true });
+
 module.exports.handler = serverless(app);
