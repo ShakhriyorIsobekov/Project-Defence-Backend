@@ -1,8 +1,7 @@
 const express = require("express");
-const authenticateToken = require("../middleware/authMiddleware");
 const router = express.Router();
 
-router.get("/", authenticateToken, (req, res) => {
+router.get("/", (req, res) => {
   res.json({ message: `Welcome, ${req.user.email}` });
 });
 

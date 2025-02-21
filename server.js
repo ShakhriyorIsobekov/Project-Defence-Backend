@@ -10,22 +10,28 @@ const cors = require("cors");
 // dontenv
 const dotenv = require("dotenv");
 dotenv.config();
-// cookieParser
-const cookieParser = require("cookie-parser");
 // User
 const User = require("./models/User");
 // middleware
-const authenticateToken = require("./middleware/authMiddleware");
 
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173/",
+      "https://project-defence-eta.vercel.app/",
+    ],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Home page");
 });
 
 // routes
+const authenticateToken = require("./middleware/authMiddleware");
 const routeDashboard = require("./routes/dashboard");
 app.use("/dashboard", authenticateToken, routeDashboard);
 const routeLogin = require("./routes/login");

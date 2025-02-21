@@ -3,7 +3,12 @@ const authenticateToken = require("../middleware/authMiddleware");
 const router = express.Router();
 
 router.get("/", authenticateToken, (req, res) => {
-  res.json({ isAuthenticated: true });
+  try {
+    res.json({ isAuthenticated: true });
+  } catch (error) {
+    console.error("Error in auth-check route:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 });
 
 module.exports = router;
